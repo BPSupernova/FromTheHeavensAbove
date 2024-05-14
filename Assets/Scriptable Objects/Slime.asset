@@ -18,4 +18,5 @@ MonoBehaviour:
   BaseStrength: 17
   BaseSmarts: 40
   BaseInitiative: 48
-  EnemyVisualPrefab: {fileID: 0}
+  EnemyVisualPrefab: {fileID: 8387088431329111887, guid: 42b45c95db0082248a018dda6d230fe9,
+    type: 3}
