@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
@@ -11,10 +12,18 @@ public class BattleManager : MonoBehaviour
     private PartyManager partyManager;
     private EnemyManager enemyManager;
 
+    private int currentPlayer;
+
     [Header("Battlers")]
     [SerializeField] private List<BattleEntities> allBattlers = new List<BattleEntities>();
     [SerializeField] private List<BattleEntities> playerBattlers = new List<BattleEntities>();
     [SerializeField] private List<BattleEntities> enemyBattlers = new List<BattleEntities>();
+
+    [Header("UI")]
+    [SerializeField] private GameObject[] targetSelectButtons;
+    [SerializeField] private GameObject battleMenu;
+    [SerializeField] private GameObject selectionMenu;
+    [SerializeField] private TextMeshProUGUI actionText;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +33,7 @@ public class BattleManager : MonoBehaviour
     
         CreatePartyEntities();
         CreateEnemyEntities();
+        ShowBattleMenu();
     }
 
     private void CreatePartyEntities()
@@ -79,11 +89,54 @@ public class BattleManager : MonoBehaviour
             enemyBattlers.Add(tempEntity);
         }
     }
+
+    public void ShowBattleMenu() {
+        actionText.text = playerBattlers[currentPlayer].Name;
+        battleMenu.SetActive(true);
+    }
+
+    public void ShowSelectionMenu() {
+        battleMenu.SetActive(false);
+        SetTargetSelectButtons();
+        selectionMenu.SetActive(true);
+    }
+
+    public void SetTargetSelectButtons() {
+        for (int i = 0; i < targetSelectButtons.Length; i++) {
+            targetSelectButtons[i].SetActive(false);
+        }
+
+        for (int j = 0; j < enemyBattlers.Count; j++) {
+            targetSelectButtons[j].SetActive(true);
+            targetSelectButtons[j].GetComponentInChildren<TextMeshProUGUI>().text = enemyBattlers[j].Name;
+        }
+    }
+
+    public void SelectTarget(int currentTarget) {
+        // Setting the current members target
+        BattleEntities currentPlayerEntity = playerBattlers[currentPlayer];
+        currentPlayerEntity.SetTarget(allBattlers.IndexOf(enemyBattlers[currentTarget]));
+
+        // Telling the BattleSystem the Player intends to attack
+        currentPlayerEntity.BattleAction = BattleEntities.Action.Attack;
+        currentPlayer++;
+
+        if (currentPlayer >= playerBattlers.Count) {
+            Debug.Log("Start the Battle");
+            Debug.Log("We are attacking: " + allBattlers[currentPlayerEntity.Target].Name);
+        } else {
+            selectionMenu.SetActive(false);
+            ShowBattleMenu();
+        }
+    }
 }
 
 [System.Serializable]
 public class BattleEntities
 {
+    public enum Action { Attack, Escape }
+    public Action BattleAction;
+    
     public string Name;
     public int Level;
     public int CurrHealth;
@@ -97,6 +150,8 @@ public class BattleEntities
     // public int MaxExp;
 
     public bool isPlayer;
+
+    public int Target;
 
     public PlayerBattleVisuals battleVisualsForPlayer;
     public EnemyBattleVisuals battleVisualsForEnemy;
@@ -115,5 +170,9 @@ public class BattleEntities
         this.Smarts = smarts;
         this.Initiative = initiative;
         this.isPlayer = isPlayer;
+    }
+
+    public void SetTarget(int target) {
+        this.Target = target;
     }
 }

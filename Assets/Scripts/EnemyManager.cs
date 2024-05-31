@@ -38,7 +38,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public List<Enemy> GetCurrentEnemies() {
-        return currentEnemies;
+        return this.currentEnemies;
     }
 }
 
