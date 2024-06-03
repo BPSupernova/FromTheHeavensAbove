@@ -24,7 +24,7 @@ public class PlayerBattleVisuals : MonoBehaviour
     private const string IS_HIT_PARAM = "IsHit";
     private const string IS_DOWN_PARAM = "IsDown";
 
-    private void Start() {
+    private void Awake() {
         anim = gameObject.GetComponent<Animator>();
     }
 
@@ -47,6 +47,11 @@ public class PlayerBattleVisuals : MonoBehaviour
             Destroy(gameObject, 1f);
         }
         UpdateHealthBar();
+    }
+
+    public void ChangeEnergy(int CurrentEnergy) {
+        this.currentEnergy = CurrentEnergy;
+        UpdateEnergyBar();
     }
 
     public void UpdateHealthBar() {

@@ -19,6 +19,6 @@ MonoBehaviour:
   BaseStrength: 27
   BaseSmarts: 45
   BaseInitiative: 21
-  MemberBattleVisualPrefab: {fileID: 7112771854266207632, guid: 2148745fe21c97d4cb587e2a1ee9dc86,
+  MemberBattleVisualPrefab: {fileID: 7508760928599609653, guid: 7f2d6a68f4d2e0446b14cc162425d1d9,
     type: 3}
   MemberOverworldVisualPrefab: {fileID: 0}

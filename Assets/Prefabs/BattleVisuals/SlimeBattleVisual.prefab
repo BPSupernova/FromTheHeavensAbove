@@ -1127,6 +1127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1803247769360229679}
   - component: {fileID: 3639149828041826782}
+  - component: {fileID: 8943377251345602328}
   m_Layer: 0
   m_Name: SlimeBattleVisual
   m_TagString: Untagged
@@ -1165,6 +1166,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3600492329714358560}
   levelText: {fileID: 137847294181625097}
+--- !u!95 &8943377251345602328
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8387088431329111887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c18b8fda92beeca43820d98a8e42148f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8577698103409023895
 GameObject:
   m_ObjectHideFlags: 0

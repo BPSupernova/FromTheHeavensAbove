@@ -21,7 +21,7 @@ public class EnemyBattleVisuals : MonoBehaviour
     private const string IS_HIT_PARAM = "IsHit";
     private const string IS_DOWN_PARAM = "IsDown";
 
-    private void Start() {
+    private void Awake() {
         anim = gameObject.GetComponent<Animator>();
     }
 
@@ -36,6 +36,7 @@ public class EnemyBattleVisuals : MonoBehaviour
     public void ChangeHealth(int CurrentHealth) {
         this.currentHealth = CurrentHealth;
         // If health is 0 -> Play death animation & end battle visual
+        UpdateHealthBar();
     }
 
     public void UpdateHealthBar() {

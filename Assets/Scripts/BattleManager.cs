@@ -5,6 +5,11 @@ using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] private enum BattleState {Start, Selection, Battle, Won, Lost, Escape}
+
+    [Header("Battle State")]
+    [SerializeField] private BattleState battleState;
+
     [Header("Spawn Points")]
     [SerializeField] private Transform[] partySpawnPoints;
     [SerializeField] private Transform[] enemySpawnPoints;
@@ -24,6 +29,12 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject battleMenu;
     [SerializeField] private GameObject selectionMenu;
     [SerializeField] private TextMeshProUGUI actionText;
+    [SerializeField] private GameObject bottomTextPopUp;
+    [SerializeField] private TextMeshProUGUI bottomText;
+
+    private const string WIN_MESSAGE = "The plan was full proof!";
+
+    private const int TURN_DURATION = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +45,65 @@ public class BattleManager : MonoBehaviour
         CreatePartyEntities();
         CreateEnemyEntities();
         ShowBattleMenu();
+    }
+
+    private IEnumerator BattleRoutine() {
+        selectionMenu.SetActive(false); // Enemy selection manu disabled 
+        battleState = BattleState.Battle; // Change our state to the battle state
+        bottomTextPopUp.SetActive(true); // Enable Bottom Text
+
+        // Loop through all battlers; Do their appropriate action
+        for (int i = 0; i < allBattlers.Count; i++) {
+            switch (allBattlers[i].BattleAction) {
+                case BattleEntities.Action.Attack:
+                    // Debug.Log(allBattlers[i].Name + " is attacking: " + allBattlers[allBattlers[i].Target].Name);
+                    yield return StartCoroutine(AttackRoutine(i));
+                    break;
+                case BattleEntities.Action.Escape:
+                    break;
+                default:
+                    Debug.Log("Error - incorrect battle action");
+                    break;
+            }
+        }
+
+        // If we haven't won or lost, repeat the game loop by opening battle menu
+        if (battleState == BattleState.Battle) {
+            bottomTextPopUp.SetActive(false);
+            currentPlayer = 0;
+            ShowBattleMenu();
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator AttackRoutine(int i) {
+        // Player's Turn
+        if (allBattlers[i].isPlayer == true) {
+            BattleEntities currAttacker = allBattlers[i];
+            BattleEntities currTarget = allBattlers[currAttacker.Target];
+
+            PlayerAttackEnemyAction(currAttacker, currTarget); // Attack selected enemy
+            yield return new WaitForSeconds(TURN_DURATION); // Wait a few seconds then kill the enemy
+            
+            if (currTarget.CurrHealth <= 0) {
+                bottomText.text = string.Format("{0} defeated {1}", currAttacker.Name, currTarget.Name);
+                yield return new WaitForSeconds(TURN_DURATION);
+                enemyBattlers.Remove(currTarget);
+                allBattlers.Remove(currTarget);
+
+                if (enemyBattlers.Count <= 0) {
+                    battleState = BattleState.Won;
+                    bottomText.text = WIN_MESSAGE;
+                    Debug.Log("Go back to overworld scene");
+                }
+            }
+        }
+
+        // Enemies turn
+        // Attack selected party member
+        // Wait a few seconds then kill the player if necessary
+        // If no players left, lose the battle
     }
 
     private void CreatePartyEntities()
@@ -54,11 +124,8 @@ public class BattleManager : MonoBehaviour
             PlayerBattleVisuals tempBattleVisuals = Instantiate(currentParty[i].MemberBattleVisualPrefab,
             partySpawnPoints[i].position, Quaternion.identity).GetComponent<PlayerBattleVisuals>();
             
-            Debug.Log("Goose");
             tempBattleVisuals.SetStartingValues(currentParty[i].CurrentHealth, currentParty[i].MaxHealth, currentParty[i].CurrentEnergy, currentParty[i].MaxEnergy, currentParty[i].Level);
-            Debug.Log("Geese");
             tempEntity.battleVisualsForPlayer = tempBattleVisuals;
-            Debug.Log("Geese");
 
             allBattlers.Add(tempEntity);
             playerBattlers.Add(tempEntity);
@@ -122,12 +189,25 @@ public class BattleManager : MonoBehaviour
         currentPlayer++;
 
         if (currentPlayer >= playerBattlers.Count) {
-            Debug.Log("Start the Battle");
-            Debug.Log("We are attacking: " + allBattlers[currentPlayerEntity.Target].Name);
+            StartCoroutine(BattleRoutine());
         } else {
             selectionMenu.SetActive(false);
             ShowBattleMenu();
         }
+    }
+
+    public void PlayerAttackEnemyAction(BattleEntities currAttacker, BattleEntities currTarget) {
+        // Get Damage
+        int damage = currAttacker.Strength; // update to an algorithm once base battle system is finished
+        // Debug.Log("Damage dealt: " + damage);
+        currAttacker.battleVisualsForPlayer.PlayAttackAnimation(); // Play Attack Animation
+        // Maybe call ChangeEnergy() here if the player uses a move that requres energy
+
+        currTarget.CurrHealth -= damage; // Deal Damage
+        currTarget.battleVisualsForEnemy.PlayHitAnimation(); // Play Target Hit animation
+        currTarget.UpdateEnemyUI(); // Update battle UI
+    
+        bottomText.text = string.Format("{0} attacks {1} for {2} damage", currAttacker.Name, currTarget.Name, damage);
     }
 }
 
@@ -174,5 +254,14 @@ public class BattleEntities
 
     public void SetTarget(int target) {
         this.Target = target;
+    }
+
+    public void UpdatePlayerUI() {
+        battleVisualsForPlayer.ChangeHealth(CurrHealth);
+        battleVisualsForPlayer.ChangeEnergy(CurrentEnergy);
+    }
+
+    public void UpdateEnemyUI() {
+        battleVisualsForEnemy.ChangeHealth(CurrHealth);
     }
 }
