@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     private bool movingInBattleArea;
     private float battleCountdown;
+    private PartyManager partyManager;
 
     private const string IS_WALK_PARAM = "IsWalking";
     private const string PLAINS_BATTLE_SCENE = "Battle_Plains_Scene";
@@ -31,6 +32,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start() {
         rb = gameObject.GetComponent<Rigidbody>();
+        partyManager = GameObject.FindFirstObjectByType<PartyManager>();
+    
+        if (partyManager.GetPosition() != Vector3.zero) {
+            transform.position = partyManager.GetPosition();
+        }
     }
 
     // Update is called once per frame
@@ -62,6 +68,7 @@ public class PlayerController : MonoBehaviour
             battleCountdown -= Time.deltaTime;
 
             if (battleCountdown <= 0) {
+                partyManager.SetPosition(transform.position);
                 battleCountdown = Random.Range(timeBetweenBattles * 0.7f, timeBetweenBattles * 1.3f);
                 SceneManager.LoadScene(PLAINS_BATTLE_SCENE);
             }
