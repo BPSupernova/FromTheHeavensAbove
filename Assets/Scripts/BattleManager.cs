@@ -33,9 +33,14 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject bottomTextPopUp;
     [SerializeField] private TextMeshProUGUI bottomText;
 
+    private const string DEFAULT_OVERWORLD_SCENE_NAME = "Overworld_Plains_Scene";
+    
     private const string WIN_MESSAGE = "The plan was full proof!";
     private const string LOSE_MESSAGE = "Humankind's last hope has been lost. Game Over."; 
+    private const string ESCAPE_SUCCESS_MESSAGE = "Everyone hightailed it out of here!";
+    private const string ESCAPE_FAILURE_MESSAGE = "You couldn't escape!";
 
+    private const int ESCAPE_CHANCE = 40;
     private const int TURN_DURATION = 2;
 
     // Start is called before the first frame update
@@ -57,13 +62,14 @@ public class BattleManager : MonoBehaviour
 
         // Loop through all battlers; Do their appropriate action
         for (int i = 0; i < allBattlers.Count; i++) {
-            if (battleState == BattleState.Battle) {
+            if (battleState == BattleState.Battle && allBattlers[i].CurrHealth > 0) {
                 switch (allBattlers[i].BattleAction) {
                     case BattleEntities.Action.Attack:
                         // Debug.Log(allBattlers[i].Name + " is attacking: " + allBattlers[allBattlers[i].Target].Name);
                         yield return StartCoroutine(AttackRoutine(i));
                         break;
                     case BattleEntities.Action.Escape:
+                        yield return StartCoroutine(EscapeRoutine());
                         break;
                     default:
                         Debug.Log("Error - incorrect battle action");
@@ -71,6 +77,8 @@ public class BattleManager : MonoBehaviour
                 }
             }
         }
+
+        RemoveDeadBattlers();
 
         // If we haven't won or lost, repeat the game loop by opening battle menu
         if (battleState == BattleState.Battle) {
@@ -87,7 +95,7 @@ public class BattleManager : MonoBehaviour
         if (allBattlers[i].isPlayer == true) {
             BattleEntities currAttacker = allBattlers[i];
             // Check if a party member kills an enemy that another member was targeting or if target is outside list bounds (bug checks)
-            if (allBattlers[currAttacker.Target].isPlayer == true || currAttacker.Target >= allBattlers.Count) {
+            if (allBattlers[currAttacker.Target].CurrHealth <= 0) {
                 currAttacker.SetTarget(GetRandomEnemy());
             }
 
@@ -100,13 +108,12 @@ public class BattleManager : MonoBehaviour
                 bottomText.text = string.Format("{0} defeated {1}", currAttacker.Name, currTarget.Name);
                 yield return new WaitForSeconds(TURN_DURATION);
                 enemyBattlers.Remove(currTarget);
-                allBattlers.Remove(currTarget);
 
                 if (enemyBattlers.Count <= 0) {
                     battleState = BattleState.Won;
                     bottomText.text = WIN_MESSAGE;
                     yield return new WaitForSeconds(TURN_DURATION); // Wait a few seconds then kill the enemy
-                    SceneManager.LoadScene("Overworld_Plains_Scene");
+                    SceneManager.LoadScene(DEFAULT_OVERWORLD_SCENE_NAME);
                 }
             }
         }
@@ -124,7 +131,6 @@ public class BattleManager : MonoBehaviour
                 bottomText.text = string.Format("{0} defeated {1}", currAttacker.Name, currTarget.Name);
                 yield return new WaitForSeconds(TURN_DURATION);
                 playerBattlers.Remove(currTarget);
-                allBattlers.Remove(currTarget);
 
                 // If no players left, lose the battle
                 if (playerBattlers.Count <= 0) {
@@ -132,6 +138,31 @@ public class BattleManager : MonoBehaviour
                     bottomText.text = LOSE_MESSAGE;
                     Debug.Log("Go back to overworld scene");
                 }
+            }
+        }
+    }
+
+    private IEnumerator EscapeRoutine() {
+        if (battleState == BattleState.Battle) {
+            if (Random.Range(1, 101) >= ESCAPE_CHANCE) {
+                bottomText.text = ESCAPE_SUCCESS_MESSAGE;
+                battleState = BattleState.Escape;
+                allBattlers.Clear();
+                yield return new WaitForSeconds(TURN_DURATION);
+                SceneManager.LoadScene(DEFAULT_OVERWORLD_SCENE_NAME);  
+                yield break;
+            } else {
+                bottomText.text = ESCAPE_FAILURE_MESSAGE;
+                yield return new WaitForSeconds(TURN_DURATION);
+            }
+        }
+    }
+
+    private void RemoveDeadBattlers() {
+        for (int i = 0; i < allBattlers.Count; i++)
+        {
+            if (allBattlers[i].CurrHealth <= 0) {
+                allBattlers.RemoveAt(i);
             }
         }
     }
@@ -290,6 +321,26 @@ public class BattleManager : MonoBehaviour
 
     private void DetermineBattleOrder() {
         allBattlers.Sort((bi1, bi2) => -bi1.Initiative.CompareTo(bi2.Initiative)); // Sorts list by initiative in ascending order
+    }
+
+    public void SelectEscapeAction() {
+        battleState = BattleState.Selection;
+        
+        // Setting the current members target
+        BattleEntities currentPlayerEntity = playerBattlers[currentPlayer];
+
+        // Telling the BattleSystem the Player intends to escape
+        currentPlayerEntity.BattleAction = BattleEntities.Action.Escape; 
+        
+        battleMenu.SetActive(false);
+        currentPlayer++;
+
+        if (currentPlayer >= playerBattlers.Count) {
+            StartCoroutine(BattleRoutine());
+        } else {
+            selectionMenu.SetActive(false);
+            ShowBattleMenu();
+        }
     }
 }
 

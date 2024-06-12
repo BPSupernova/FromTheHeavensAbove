@@ -14,25 +14,42 @@ AnimationClip:
   m_RotationCurves: []
   m_CompressedRotationCurves: []
   m_EulerCurves: []
-  m_PositionCurves: []
-  m_ScaleCurves:
+  m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.73837, y: 0.73837, z: 0.73837}
-        inSlope: {x: Infinity, y: Infinity, z: Infinity}
-        outSlope: {x: Infinity, y: Infinity, z: Infinity}
+        value: {x: 0.76, y: 0.11, z: -0.15}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.33333334
+        value: {x: 0.76, y: 0.25, z: -0.15}
+        inSlope: {x: 0, y: 1.12, z: 0}
+        outSlope: {x: 0, y: 1.12, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.5
-        value: {x: 0.99421525, y: 0.99421525, z: 0.99421525}
-        inSlope: {x: Infinity, y: Infinity, z: Infinity}
-        outSlope: {x: Infinity, y: Infinity, z: Infinity}
+        value: {x: 0.76, y: 1, z: -0.15}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.6666667
+        value: {x: 0.76, y: 0.25, z: -0.15}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -40,7 +57,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Sphere
+    path: Slime+(1)_0/Sphere
+  m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves:
   - serializedVersion: 2
@@ -48,13 +66,13 @@ AnimationClip:
     - time: 0
       value: {fileID: -1983933440, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
     - time: 0.33333334
-      value: {fileID: -500068682, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
+      value: {fileID: 1016920316, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
     - time: 0.5
       value: {fileID: 480058743, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
     - time: 0.6666667
-      value: {fileID: -1783778215, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
+      value: {fileID: 1016920316, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
     attribute: m_Sprite
-    path: 
+    path: Slime+(1)_0
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -66,8 +84,8 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1381327793
-      attribute: 3
+      path: 1331226577
+      attribute: 1
       script: {fileID: 0}
       typeID: 4
       customType: 0
@@ -75,7 +93,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 0
+      path: 3683323212
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -85,9 +103,9 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: -1983933440, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
-    - {fileID: -500068682, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
+    - {fileID: 1016920316, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
     - {fileID: 480058743, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
-    - {fileID: -1783778215, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
+    - {fileID: 1016920316, guid: 9e9f03b16ce373b49ba9eacc1dd3ad13, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -115,27 +133,45 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.73837
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: 0.76
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.33333334
+        value: 0.76
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: 0.99421525
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: 0.76
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0.76
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalScale.x
-    path: Sphere
+    attribute: m_LocalPosition.x
+    path: Slime+(1)_0/Sphere
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -145,27 +181,45 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.73837
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: 0.11
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.33333334
+        value: 0.25
+        inSlope: 1.12
+        outSlope: 1.12
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: 0.99421525
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalScale.y
-    path: Sphere
+    attribute: m_LocalPosition.y
+    path: Slime+(1)_0/Sphere
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -175,27 +229,45 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.73837
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: -0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.33333334
+        value: -0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: 0.99421525
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: -0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6666667
+        value: -0.15
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalScale.z
-    path: Sphere
+    attribute: m_LocalPosition.z
+    path: Slime+(1)_0/Sphere
     classID: 4
     script: {fileID: 0}
     flags: 0

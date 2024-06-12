@@ -1114,7 +1114,7 @@ GameObject:
   - component: {fileID: 2536967666845256558}
   - component: {fileID: 604149350575356810}
   - component: {fileID: 5458331631719589925}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: YorenBattleVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
