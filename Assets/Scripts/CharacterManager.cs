@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CharacterManager : MonoBehaviour
 {
+    [SerializeField] private GameObject joinPopUp;
+    [SerializeField] private TextMeshProUGUI joinPopUpText;
+
     private bool infrontOfPartyMember;
     private GameObject joinableMember;
     private PlayerControls playerControls;
 
     private const string NPC_Joinable_TAG = "NPCJoinable";
+    private const string JOINED_PARTY_MESSAGE = " joined the party!";
     
     private void Awake() {
         playerControls = new PlayerControls();
@@ -45,7 +50,8 @@ public class CharacterManager : MonoBehaviour
     private void MemberJoined(PartyMemberInfo partyMember) {
         GameObject.FindFirstObjectByType<PartyManager>().AddMemberToParty(partyMember.MemberName);
         joinableMember.GetComponent<JoinableCharacter>().CheckIfJoined();
-        
+        joinPopUp.SetActive(true);
+        joinPopUpText.text = partyMember.MemberName + JOINED_PARTY_MESSAGE; 
     }
 
     private void OnTriggerEnter(Collider other) {
