@@ -19,7 +19,6 @@ public class PartyManager : MonoBehaviour
         } else {
             instance = this.gameObject;
             AddMemberToParty(defaultPartyMember.MemberName);
-            AddMemberToParty(defaultPartyMember.MemberName);
         }
 
         DontDestroyOnLoad(gameObject);
@@ -48,7 +47,7 @@ public class PartyManager : MonoBehaviour
         }
     }
 
-    public List<PartyMember> GetCurrentParty() {
+    public List<PartyMember> GetAliveParty() {
         List<PartyMember> aliveParty = new List<PartyMember>();
         aliveParty = currentParty;
         for (int i = 0; i < aliveParty.Count; i++) {
@@ -57,6 +56,10 @@ public class PartyManager : MonoBehaviour
             }
         }
         return aliveParty;
+    }
+
+    public List<PartyMember> GetCurrentParty() {
+        return currentParty;
     }
 
     public void SaveHealth(int partyMember, int health) {

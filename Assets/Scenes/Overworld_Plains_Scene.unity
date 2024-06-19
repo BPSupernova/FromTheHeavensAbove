@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56426ab875d814946aa368a9d3cb5d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  memberToJoin: {fileID: 0}
+  memberToJoin: {fileID: 11400000, guid: df5b1f00635dc494c807ce8479ded6b0, type: 2}
   interactionPrompt: {fileID: 1396513717}
 --- !u!1 &1426175147
 GameObject:
@@ -2610,6 +2610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allMembers:
   - {fileID: 11400000, guid: fadd185042781514ebceed4a3ccab946, type: 2}
+  - {fileID: 11400000, guid: df5b1f00635dc494c807ce8479ded6b0, type: 2}
   currentParty: []
   defaultPartyMember: {fileID: 11400000, guid: fadd185042781514ebceed4a3ccab946, type: 2}
 --- !u!4 &1516093817

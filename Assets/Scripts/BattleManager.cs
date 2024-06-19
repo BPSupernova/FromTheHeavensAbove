@@ -105,6 +105,7 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(TURN_DURATION); // Wait a few seconds then kill the enemy
             
             if (currTarget.CurrHealth <= 0) {
+                currTarget.battleVisualsForEnemy.PlayDownAnimation();
                 bottomText.text = string.Format("{0} defeated {1}", currAttacker.Name, currTarget.Name);
                 yield return new WaitForSeconds(TURN_DURATION);
                 enemyBattlers.Remove(currTarget);
@@ -128,6 +129,7 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(TURN_DURATION);
 
             if (currTarget.CurrHealth <= 0) {
+                currTarget.battleVisualsForPlayer.PlayDownAnimation();
                 bottomText.text = string.Format("{0} defeated {1}", currAttacker.Name, currTarget.Name);
                 yield return new WaitForSeconds(TURN_DURATION);
                 playerBattlers.Remove(currTarget);
@@ -170,7 +172,7 @@ public class BattleManager : MonoBehaviour
     private void CreatePartyEntities()
     {
         List<PartyMember> currentParty = new List<PartyMember>();
-        currentParty = partyManager.GetCurrentParty();
+        currentParty = partyManager.GetAliveParty();
 
         for (int i = 0; i < currentParty.Count; i++)
         {
